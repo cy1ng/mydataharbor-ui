@@ -1,40 +1,42 @@
 import React, { useState } from 'react'
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import Home from './pages/Home'
 import logo from './logo.svg';
-import './App.less';
+import { RouterConfig } from "./utils/config";
+import './App.scss';
 
 const { Header, Sider, Content } = Layout;
+const MenuItem = Menu.Item
 
 const App = props => {
   const [collapsed, setCollapsed] = useState(false)
+  const [selectedKeys, setSelectedKeys] = useState([])
 
   const onToggle = () => {
     setCollapsed((pre) => !pre)
+  }
+
+  const onMenuChange = (key) => {
+
+  }
+
+  const genMenuItem = () => {
+    return RouterConfig.map((item) => {
+      const { title, key, component, icon: Icon} = item
+      return <MenuItem key={key} icon={<Icon />}>
+        {title}
+      </MenuItem>
+    })
   }
 
   return <div className="app-wrap">
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
-            </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-            </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-            </Menu.Item>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick={onMenuChange}>
+          {genMenuItem()}
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -55,7 +57,7 @@ const App = props => {
           <Switch>
             <Route path="/home" component={Home}></Route>
           </Switch>
-        </Content>x
+        </Content>
       </Layout>
     </Layout>
   </div>

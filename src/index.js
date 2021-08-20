@@ -4,6 +4,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 import App from './App';
 import Home from './pages/Home'
 import reportWebVitals from './reportWebVitals';
+import 'antd/dist/antd.css'
 import './index.css';
 
 const main = () => {
